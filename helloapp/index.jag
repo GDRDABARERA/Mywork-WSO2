@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+
+<h1>USA Election 2016 Details</h1>
+ <%
+ 	 var db = new Database("jdbc:mysql://127.0.0.1:3306/twitterDB", "root", "1234");
+     
+  
+     
+     var result = db.query("SELECT * FROM TwTable");
+ %>
+ <h2>List of all Tweets </h2>
+ <table "TwTable" border="2">
+  <tr>
+   <th>ID</th>
+   <th>Tweet</th>
+  
+  </tr>
+
+ <%
+  for (var i in result){
+%>
+  <tr>
+   <td><%=result[i].id%></td>
+   <td><%=result[i].tweet%></td>
+ 
+  </tr>
+  <%
+ }
+ 
+ %>
+
+
+
+</body>
+
+<%
+
+%>
+
+</html>
+
+
