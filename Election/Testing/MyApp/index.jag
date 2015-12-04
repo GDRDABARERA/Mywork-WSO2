@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+
+<h1>USA Election 2016 Most Popular Tweets</h1>
+ <%
+     var db = new Database("jdbc:mysql://127.0.0.1:3306/twitterDB", "root", "sri"); 
+     var result = db.query("SELECT * FROM tk2");
+ %>
+ <h2>List of all Tweets </h2>
+ <table "TwTable" border="2">
+  <tr>
+   <th>Owner</th>
+   <th>TestObj</th>
+  </tr>
+
+ <%
+  for (var i in result){
+%>
+  <tr>
+   <td><%=result[i].Owner%></td>
+   <td><%=result[i].TestObj%></td>
+ 
+  </tr>
+  <%
+ }
+ 
+ %>
+
+
+
+</body>
+
+<%
+
+%>
+
+</html>
+
+

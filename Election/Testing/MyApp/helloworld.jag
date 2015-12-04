@@ -1,0 +1,13 @@
+
+
+    <%
+    var db = new Database("jdbc:mysql://127.0.0.1:3306/twitterDB", "root", "1234");
+     
+  
+     
+    var result = db.query("SELECT * FROM TwTable");
+     
+    print(result);
+    %>
+
+

@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>UES - presidential election 2016- United States</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" src="css/normalize.css"/>
+    <link rel="stylesheet" media="screen" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/c3.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- Navigation start -->
+    <nav class="navbar">
+        <div class="profile-container">
+            <img src="img/user.png">
+        </div>
+        <ul>
+            <li><a href="#"><i class="fa fa-files-o"></i></a></li>
+            <li><a href="#"><i class="fa fa-cogs"></i></a></li>
+            <li><a href="#"><i class="fa fa-sign-out"></i></a></li>
+        </ul>
+    </nav>
+    <!-- Navigation end -->
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+		    <img src="img/bg2.jpg">
+
+                </div>
+            </div>	
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Presidential Election 2016 USA</h1>
+                </div>
+            </div>
+           <div class="row">
+                <div class="col-lg-4">
+                    <div class="widget-container  info-container2">
+                        <a  href="#" ><h2>Hillary Clinton</h2></a>
+			 
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="widget-container  info-container2">
+                        <a  href="#" ><h2>Donald Trump</h2></a>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="widget-container  info-container2">
+                        <a  href="#" ><h2>Bernie Sanders</h2></a>
+                        
+                    </div>
+                </div>
+            </div>
+<div class="row">
+<div class="col-lg-2">
+<img src="img/hd.jpg">
+</div>
+</div>
+	<div class="col-lg-2">
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">           
+                        
+			 <a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Ben Carson<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+                        
+			 <a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Martin O’ Malley<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+                        
+			 <a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Jeb Bush<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+ 
+			 <a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Ted Cruz<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Chris Christie<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">           
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Carly Fiorina<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Jim Gilmore<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Lindsey Graham<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Mike Huckabee<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Bobby Jindal<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">           
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>John Kasich<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>George Pataki<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Rand Paul<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Marco Rubio<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;" class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Rick Santorum<span></h5></a>
+                    </div>
+                    <div style="background-color:#F1F1F3;"  class="widget-container info-container">
+
+			<a style="margin: -20px 0px;height: 40px;" href="#" class="btn btn-default btn-block"><h5><span>Scott Walker<span></h5></a>
+                    </div>
+          
+                </div>
+
+                <div class="col-lg-6">
+<div class="row">
+		    <div style="width: 710px;" class="widget-container">		
+                    	<div style="width: 700px;margin-right:12px;"  class="widget-container5"> 
+                    	<object type="text/html" data="../All/graph1my.html" style="width:700px; height:500px; margin:1%;">
+					    </object>
+                    	
+		    </div>
+</div>
+<div class="row">
+		    <div style="width: 710px;margin-left:12px;"  class="widget-container">
+                        <h2>Most popular Tweets</h2>                      
+		    </div>
+</div>
+<div class="row">
+		    <div style="width: 710px;margin-left:12px; "  class="widget-container">
+                         <%
+				     var db = new Database("jdbc:mysql://127.0.0.1:3306/twitterDB", "root", "root"); 
+				     var result = db.query("SELECT * FROM tk2");
+				 %>
+			
+				<table "TwTable" border="2" style="width:100%;">
+				  <tr>
+				   <th>Owner</th>
+				   <th>Popular Tweet</th>
+				   <th>Retweets</th>
+				   <th>Favourite</th>
+				   				  
+				  </tr>
+				
+				 <%
+				  for (var i in result){
+				%>
+				<tr>
+				   <td><%=result[i].Owner%></td>
+				   <td><%=result[i].TestObj%></td>
+				   <td><%=result[i].Rt%></td>
+				   <td><%=result[i].Ft%></td>
+				 
+				  </tr>
+				<%
+				db.close();
+				 }			 
+				 %>
+				</table>
+		    	    </div>
+			</div>
+		</div>
+                 </div>
+		<div class="col-lg-4">	
+		    <div style="width: 400px;" class="widget-container">		
+			<h1><span>Donald Trump</span></h1>
+			 <div style="width: 325px;margin-left:15px;" class="widget-container">
+			<img src="img/trump.jpg">
+			</div>
+			<div class="panel-body">
+                            
+                            <a href="#" class="btn btn-default btn-block">View Details</a>
+                        </div>
+		    </div>
+		    <div style="width: 400px;" class="widget-container">		
+			<div class="info-text">
+			<h3>70%</h3>
+			<table  border="2">
+				  <tr>
+				   <th>Positive</th>
+				   <th>Negative</th>			   				  
+				  </tr>
+				<tr>
+				   <td>test</td>
+				   <td>test</td>
+				 
+				  </tr>
+			</table>
+			</div>
+                        <h5><span> Semantic Analisis</span></h5>
+		    </div>
+			<div style="width: 400px;" class="widget-container">		
+			<div class="info-text">
+			<h3>#Hillery,#hillary2016</h3>
+			<h3>#hillaryclinton,#imwithher</h3>
+				
+				 <%
+				     var db = new Database("jdbc:mysql://127.0.0.1:3306/twitterDB", "root", "root"); 
+				     var result = db.query("SELECT DISTINCT HTag FROM tk2");
+				 %>
+			
+				
+				
+				 <%
+				  for (var i in result){
+				%>				
+				   <h3>#<%=result[i].HTag%><h3>
+
+				<%
+				db.close();
+				 }			 
+				 %>
+				</table>
+			</div>
+                        <h5><span> Hash Tags</span></h5>
+		    </div>
+			<div style="width: 400px;" class="widget-container">		
+			<div class="info-text"><h2>Hillary Clinton-85%</h2></div>
+                        <h5><span> Prediction Perscentage</span></h5>
+			 <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Top Candidates
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
+                            <a href="#" class="btn btn-default btn-block">View Details</a>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+             
+                    </div>
+
+		    </div>
+
+		</div>
+
+
+            </div>
+
+         
+        </div>
+
+    </div>
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.11.3.min.js"><\/script>')</script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="../js/morris-data.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+<script src="js/libs/datamaps.usa.min.js"></script>
+<script src="js/libs/c3.min.js"></script>
+<script src="js/libs/jquery.flipping_text.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+    <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="bower_components/raphael/raphael-min.js"></script>
+    <script src="bower_components/morrisjs/morris.min.js"></script>
+    <script src="js/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+
+
+</body>
+
+<%
+
+%>
+
+</html>
+
+
