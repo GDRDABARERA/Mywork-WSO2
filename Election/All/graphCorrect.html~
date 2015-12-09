@@ -6,22 +6,45 @@
     <meta charset="utf-8">
     <title>Dagre Interactive Demo</title>
 
-    <script src="d3.v3.js"></script>
-    <script src="graphlib-dot.js"></script>
-    <script src="dagre-d3.js"></script>
-    <script src="jquery-2.1.4.min.js"></script>
+
+    <script src="d3/jquery-2.1.4.min.js"></script>
+    <script src="d3/d3.min.js"></script>
+    <script src="d3/d3.v3.js"></script>
+    <script src="d3/graphlib-dot.js"></script>
+    <script src="d3/dagre-d3.js"></script>
+    <script src="d3.tip.v0.6.3.js"></script>
+
 
     <style>
 
         .node {
-        stroke: #fff;
-        stroke-width: 1.5px;
+        stroke: #3399ff;
+        stroke-width: 2px;
         }
 
         .link {
-        stroke: #999;
+        stroke: #C0C0C0;   <!--Link color white     -->
         stroke-opacity: .6;
         }
+        d3-tip {
+        line-height: 1;
+        color: black;
+        }
+
+        .node text {
+        font: 9px helvetica;
+        }
+
+
+        .Cr .q0-9{fill:rgb(201,193,193)}
+        .Cr .q1-9{fill:rgb(148,141,141)}
+        .Cr .q2-9{fill:rgb(94,81,81)}
+        .Cr .q3-9{fill:rgb(55,40,40)}
+        .Cr .q4-9{fill:rgb(80,7,7)}
+        .Cr .q5-9{fill:rgb(115,19,19)}
+        .Cr .q6-9{fill:rgb(135,32,32)}
+        .Cr .q7-9{fill:rgb(164,40,40)}
+        .Cr .q8-9{fill:rgb(252,1,1)}
 
     </style>
 
@@ -47,8 +70,9 @@
 </head>
 
 <body>
+<!--<div id="twitterGraph"></div>  -->
 <script>
-
+//radius --> retweet   color-->content
         var graph = {
             "nodes":[
                 {"name":"Myriel","group":1},
@@ -386,271 +410,469 @@
                 {"source":76,"target":58,"value":1}
             ]
         };
-
+        var padding = 1, // separation between circles
+        radius=8;
+        function collide(alpha) {
+          var quadtree = d3.geom.quadtree(graph.nodes);
+          return function(d) {
+            var rb = 2*radius + padding,
+                nx1 = d.x - rb,
+                nx2 = d.x + rb,
+                ny1 = d.y - rb,
+                ny2 = d.y + rb;
+            quadtree.visit(function(quad, x1, y1, x2, y2) {
+              if (quad.point && (quad.point !== d)) {
+                var x = d.x - quad.point.x,
+                    y = d.y - quad.point.y,
+                    l = Math.sqrt(x * x + y * y);
+                  if (l < rb) {
+                  l = (l - rb) / l * alpha;
+                  d.x -= x *= l;
+                  d.y -= y *= l;
+                  quad.point.x += x;
+                  quad.point.y += y;
+                }
+              }
+              return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+            });
+          };
+        }
         var g = graphlibDot.read("digraph { A -> B;}");
 
         console.log(g.nodes);
         console.log(g.edges);
-
+		
+		var c10 = d3.scale.category10();
         var graph = new Object();
         var map = new Object();
-        var index = 0;
+        var index =0;
 
-        var linkIndex = 0;
-
-        var width = 960,
-                height = 500;
-
-        var color = d3.scale.category20();
-
-        var rScale = d3.scale.linear()
-                .domain([0,500]).range([1,40]);
-        console.log("V=" +rScale(10))
-
-        var force = d3.layout.force()
+         var linkIndex=0 ;
+         var Nodes=[];
+	 var Edges=[];
+       
+         var    w = window,
+				d = document,
+				e = d.documentElement,
+				g = d.getElementsByTagName('body')[0],
+				x = w.innerWidth || e.clientWidth || g.clientWidth,
+				y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+				
+		 var force = d3.layout.force()
                 .charge(-120)
                 .linkDistance(20)
-                .size([width, height]);
+                .size([x, y]);
 
-        var svg = d3.select("body").append("svg")
-                .attr("width", width)
-                .attr("height", height);
+		var svg = d3.select("body").append("svg")
+				.attr("width", x)
+				.attr("height", y)
+				.append("g");
+
+			function updateWindow(){
+				x = w.innerWidth || e.clientWidth || g.clientWidth;
+				y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+				
+				svg.attr("width", x).attr("height", y);
+			}
+			window.onresize = updateWindow;
+		
                 
-         //-----------------------------------------------------
-         
-         var nodeJason, edgeJason;
-        
-        
-        $.ajax({
-              url: "https://10.100.4.185:9446/analytics/tables/EDGETABLE",
-              beforeSend: function(xhr) { 
-                                  xhr.setRequestHeader("Authorization","Basic YWRtaW46YWRtaW4="); 
-                            },
-              method: "GET",
-      
-             contentType: "application/json",
-             success: function(data) {
-						nodeJason = data;
-                alert(JSON.stringify(nodeJason));
-        
-                    
-        
-                 
-        }
-        });
-        
-        //-H "Authorization: Basic YWRtaW46YWRtaW4="
-        
-         
-        $.ajax({
-              url: "https://10.100.4.185:9446/analytics/tables/NODETWEETTABLE",
-              beforeSend: function(xhr) { 
-                                  xhr.setRequestHeader("Authorization","Basic YWRtaW46YWRtaW4="); 
-                            },
-              method: "GET",
-      
-             contentType: "application/json",
-             success: function(data) {
-						edgeJason = data;
-                 alert(JSON.stringify(edgeJason));
-        
-                     //data1 = JSON.parse(data.message);
-        
-                 
-        }
-        });
-        
-        
-        //---------------------------------------------------------------------    duplicate   
-           
-        /*    nodeJason.forEach(function(d) {
-                map[d.value.from_user] = index;
-                d.value.content = parseInt(d.value.content)
-                index++;
-            });   
-             graph.nodes= nodeJason;
+        // tool tip with the label        
+          var tip = d3.tip()
+              .attr('class', 'd3-tip')
+              .offset([-10, 0])
+              .html(function (d) {
+              return  d.name + "";
+             })
+             svg.call(tip);  
              
-    */
-             	
-            
-                        Data Format Edge
-       
-                
-                
-         //----------------------------       
-
-              
-                
-
-        d3.csv("data/v.csv", function(data) {
-            data.forEach(function(d) {
-                map[d.name] = index;
-                d.degree = parseInt(d.degree)
-                index++;
-            });
-
-            graph.nodes = data;
-            //reads name, c
-            //data.forEach(function(d) {
-            //    d.population = +d.population;
-            //    d["land area"] = +d["land area"];
-            //    console.log(d);
-            //});
-            //console.log(data[0]);
-            //console.log(data[1]);
-
-            d3.csv("data/e.csv", function(data) {
-                tlinks = new Object();
-                data.forEach(function(d) {
-                    //var s = map[d.source];
-                    //var t = map[d.target];
-
-                    //if(s){
-                    //    if(t){
-                    //        tlinks[linkIndex] = new Object();
-                    //        tlinks[linkIndex].target = t;
-                    //        tlinks[linkIndex].source = t;
-                    //        tlinks[linkIndex].value = parseInt(d.value);
-                    //        console.log("link found " + tlinks[linkIndex].source + " ->" + tlinks[linkIndex].target);
-                     //       linkIndex++;
-                     //   }else{
-                     //       console.log("unknown vertex "+ d.target);
-                     //   }
-                    //}else{
-                        //console.log("unknown vertex "+ d.source);
-                    //}
-
-                    /*
-                        Data Format Edge
-                        ================
-                        source
-                        target
-                        value
-
-                        Data Format Vertex
-                        ================
-                        name
-                        group
-                        degree - decide size of the vertex
-
-                     */
-
-                    var s = map[d.source];
-                    var t = map[d.target];
-
-                    if(typeof  s === "undefined" || typeof  t === "undefined"){
-                        console.log("unknown vertex "+ d.source + "->" + d.target);
-                        d.source = 1
-                        d.target = 2;
-                    }else{
-                        d.source = map[d.source];
-                        d.target = map[d.target];
-                        d.value = parseInt(d.value)
-                    }
-                });
-
-                //data[236] = {"source":1, "target":2, "value":3}
-                graph.links = data;
-                console.log(data[0]);
-                console.log("both loaded 2");
-                drapGraph(graph);
-            });
-        });
-
-// arrow head
-svg.append("defs").selectAll("marker")
-    .data(["suit", "licensing", "resolved"])
-  .enter().append("marker")
-    .attr("id", function(d) { return d; })
-    .attr("viewBox", "0 -5 10 10")
-    .attr("refX", 25)
-    .attr("refY", 0)
-    .attr("markerWidth", 6)
-    .attr("markerHeight", 6)
-    .attr("orient", "auto")
-  .append("path")
-    .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
-    .style("stroke", "#4679BD")
-    .style("opacity", "0.6");
+        // arrow head for the graph
+        
+        svg.append("defs").selectAll("marker")
+			.data(["suit", "licensing", "resolved"])
+		     .enter().append("marker")
+			.attr("id", function(d) { return d; })
+			.attr("viewBox", "0 -5 10 10")
+			.attr("refX", 25)
+			.attr("refY", 0)
+			.attr("markerWidth", 6)
+			.attr("markerHeight", 6)
+			.attr("orient", "auto")
+		    .append("path")
+			.attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+			.style("stroke", "#4679BD")
+			.style("opacity", "0.6");
 
 
-	//Set up tooltip
-var tip = d3.tip()
-    .attr('class', 'd3-tip')
-    .offset([-10, 0])
-    .html(function (d) {
-    return  d.name + "";
-})
-svg.call(tip);
 
 
+//----------------------------starts mission with ajax-- asinchronous so all js should be inside success (main thread can run js and two more threads can run ajax 
+//this kind of problem may occur when working with ajax
+//1    
+
+
+
+		//var nodeUrl;
+		//var edgeUrl"https://10.100.4.185:9446/analytics/tables/"+tableEdges[k];
+		var tableNodes=["NODETWEETTABLE","BERNIENODETWEETTABLE","CLINTONNODETWEETTABLE"];
+		var tableEdges=["1EDGETWEETTABLE","BERNIEEDGETWEETTABLE","CLINTONEDGETWEETTABLE"];
+		var tableColor=["#F63C3C","#1017E9","#3EFF03"];
+		var k=0;
+		recursionLoop(k);
+		
+//for(k=0;k<2;k++){
+
+                function recursionLoop(k){
+
+
+
+	                var   nodeUrl ="https://10.100.4.185:9446/analytics/tables/"+tableNodes[k];
+	                   //
+                      //  var Nodes=[];
+		                //var Edges=[];
+				
+	                  $.ajax({
+		                      async: false,
+                              url:   nodeUrl,                                                            // "https://10.100.4.185:9446/analytics/tables/ALLNODE",
+                              beforeSend: function(xhr) { 
+                                                  xhr.setRequestHeader("Authorization","Basic YWRtaW46YWRtaW4="); 
+                                            },
+                              method: "GET",
+                      
+                             contentType: "application/json",
+                             success: function(data) {
+				                  loadNodesData(data, k);
+                      
+                      //........................node getting over            
+                        }
+                    });
+                    
+
+                }
+
+	//renderNodes("data/v.csv");
+	//2 seperate node jason and create a json called Node
+
+	function  loadNodesData(data,k){
+		
+		var jsonNode = data;
+		// alert(JSON.stringify(jsonNode[0].values));
+		for(var i=0; i<jsonNode.length;i++){//
+					var d= jsonNode[i].values;                       
+                    //  alert(JSON.stringify(d));
+                   //   alert(d.name);
+			d.color=tableColor[k];
+					Nodes.push(d);	
+			
+			
+			
+		}
+		
+		//alert(JSON.stringify(Nodes));
+		loadEdgesData(k);	
+	}
+	//3 ajax code to load edges Table and seperate edges into Edges json
+	function loadEdgesData(k ){
+		  var edgeUrl="https://10.100.4.185:9446/analytics/tables/"+tableEdges[k];
+		   $.ajax({
+			        async: false,
+                    url: edgeUrl  ,                                                        //"https://10.100.4.185:9446/analytics/tables/ALLEDGE",
+                    beforeSend: function(xhr) { 
+                           xhr.setRequestHeader("Authorization","Basic YWRtaW46YWRtaW4="); 
+                    },
+                    method: "GET",
+      
+                    contentType: "application/json",
+                    success: function(data) {
+						var jsonEdge= data;
+						for(var i=0;i<jsonEdge.length;i++){  //
+							var d= jsonEdge[i].values;
+							Edges.push(d);
+							
+						}
+//4 by this place you have all the edges and nodes ready
+						alert(JSON.stringify(Edges));
+						alert(JSON.stringify(Nodes));
+						
+//start render nodes
+						
+						
+						
+					}
+		    });
+		    
+		    
+		    
+						if(k==2){
+						   renderNodes(Nodes,Edges);
+						}else{
+						        
+						    onComplete(k);
+						}
+
+		
+	}
+	
+	// 5 render Nodes
+
+	function renderNodes(dataset1,dataset2){
+			
+					
+			//	 function(dataset1) {  //dataset d3.domain--> data set passing
+					dataset1.forEach(function(d) {
+					       // alert(d.name);
+						map[d.name] = index;
+						d.degree = parseInt(d.degree)
+						index++;
+					});
+
+					graph.nodes = dataset1;
+					//alert(JSON.stringify(dataset1));
+					//alert(JSON.stringify(map));
+					
+					renderEdges(dataset2);
+					
+				
+			
+			
+			
+			
+			}
+
+
+// 6 render edges
+		function renderEdges(dataset,k){
+			
+				//	d3.json(dataset, function(data) {
+						tlinks = new Object();
+						dataset.forEach(function(d) {
+				
+
+							/*
+								Data Format Edge
+								================
+								source
+								target
+								value
+
+								Data Format Vertex
+								================
+								name
+								group
+								degree - decide size of the vertex
+
+							 */
+
+							var s = map[d.source];
+							var t = map[d.target];
+
+							if(typeof  s === "undefined" || typeof  t === "undefined"){
+								console.log("unknown vertex "+ d.source + "->" + d.target);
+								d.source = 1
+								d.target = 2;
+							}else{
+								d.source = map[d.source];
+								d.target = map[d.target];
+								d.value = parseInt(d.value)
+							}
+						});
+
+						//data[236] = {"source":1, "target":2, "value":3}
+						graph.links = dataset;
+						
+					  //  alert(JSON.stringify(graph.links));
+					//	console.log(data[0]);
+						console.log("both loaded 2");
+                        
+
+			
+			                  drapGraph(graph);
+			
+			
+			
+			}
 
 
 
         function  drapGraph(graph) {
-            force.nodes(graph.nodes)
-                    .links(graph.links)
-                    .start();
+			
+
+
+                alert("k value ");
+
+                force = d3.layout.force()
+                .charge(-120)
+                .linkDistance(20)
+                .size([x, y])
+                .nodes(graph.nodes)
+                .links(graph.links)
+                .start();
+						
+			
+					
+					
+			//map radius  domain--> range
+			var rScale = d3.scale.linear()
+					.domain([d3.min(graph.nodes, function (d) {return Math.log(d.group);}),d3.max(graph.nodes, function (d) {return Math.log(d.group);})])
+					.range([2,50]);
+				   // console.log("V=" +rScale(10))
+				   
+		/* //map the color linearly  domain --> range
+			var rcolor = d3.scale.linear()
+					.domain([2,d3.max(graph.nodes, function (d) {return Math.log(d.group);})])
+					.range(['#000000','#F70B0B']);
+					//.range(["gray","red"]);
+					*/
+				//-------------------------------------------------------------
+	
 
             var link = svg.selectAll(".link")
                     .data(graph.links)
                     .enter().append("line")
                     .attr("class", "link")
-                    
-   					  .style("marker-end",  "url(#suit)") // Modified line 
-   	
-                    .style("stroke-width", function(d) { return (1/Math.sqrt(d.value)); });
+                    .style("stroke-width", 2)
+                    .style("stroke-length", function(d) { return 2*Math.sqrt(d.value); });
+                   // .style("marker-end",  "url(#suit)") ;// Modified line 
+   
                     //.style("stroke-width", function(d) { return 2; });
 
             var node = svg.selectAll(".gnode")
                     .data(graph.nodes)
                     .enter().append("g")
                     .attr("class", "gnode")
-                    .call(force.drag)
-                   .on('mouseover', tip.show) //Added
- 							.on('mouseout', tip.hide); //Added ;
+                    .on('mouseover', tip.show) //Added
+					.on('mouseout', tip.hide) 
+					.call(force.drag);//Added 
+				/*	node.append("text")                //text label
+						  .attr("dx", 10)
+						  .attr("dy", ".35em")
+						  .text(function(d) { return d.name });  */
+						  
+			var maxretweets=d3.max(graph.nodes, function (d) {return Math.log(d.group);});
+			var minretweets=d3.min(graph.nodes, function (d) {return Math.log(d.group);});
+			var maxContent=d3.max(graph.nodes, function (d) {return d.degree;});
+			var minvalue=d3.min(graph.links , function (d) {return d.value;});
+			
+			//alert(minretweets);	
+		        //alert( minvalue);			 
+
             var circle = node.append("circle")
-                    .attr("r", function(d) { return rScale(d.degree); })
-                    .style("fill", function(d) { return color(d.group); });
-//            var label = node.append("text")
-//                    .style("font-family", "sans-serif")
-//                    .style("text-anchor", "middle")
-//                    .style("font-size", "10")
-//                    .style("stroke", "#000000")
-//                    .text(function(d){return d.name})
+                    .attr("r",function(d) { 
+                   
+                                return rScale(Math.log(d.group)); 
+                        }) //retweet
+                    .style("fill", function(d) {
+                                       // alert(node.color);
+                                        return d.color;
+                                     
+                                });
+					
+					
+					
+					
+					/*	 var col = parseInt(d.degree);  //content
+					//	alert(col);
+						 if(col> (maxContent*0.75) ){
+									return '#FA0D24';
+							 } else if(col> (maxContent*.50)){
+									return '#CE656F';
+								 
+							 }else if(col> (maxContent*.25)){
+								   return '#923942';
+							 }else if(col> (maxContent*.01)){
+								   return '#D1A0A5';
+							 }else{
+								  return '#808080';
+							 } 
+							//rcolor(col);
+						
+						})	*/
+//------------------------------------------------------------------------
+//give you nodes with labels          
+           var label = node.append("text")
+                    .style("font-family", "sans-serif")
+                    .style("text-anchor", "middle")
+                    .style("font-size", "8")
+                    .style("stroke", "#404040")
+                    .text(function(d){
+					
+						    if(rScale(Math.log(d.group))>10){
+						     return d.name;
+						     }
+					     });  
+//---------------------------------------------------------------------------------						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 
-
-//            var node = svg.selectAll(".node")
-//                    .data(graph.nodes)
-//                    .enter().append("circle")
-//                    .attr("class", "node")
-//                    .attr("r", 10)
-//                    .style("fill", function(d) { return color(d.group); })
-//                    .call(force.drag);
-
-
+//-----------------------------------------------------------------
             node.append("title")
                     .text(function(d) { return d.name; });
 
             force.on("tick", function() {
-                link.attr("x1", function(d) { return d.source.x; })
+                    link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y; })
                         .attr("x2", function(d) { return d.target.x; })
                         .attr("y2", function(d) { return d.target.y; });
 
-                node.attr("cx", function(d) { return d.x; })
+                 node.attr("cx", function(d) { return d.x; })
                         .attr("cy", function(d) { return d.y; });
 
-                circle.attr("cx", function(d) { return d.x; })
+                 circle.attr("cx", function(d) { return d.x; })
                         .attr("cy", function(d) { return d.y; });
 
                 label.attr("x", function(d) { return d.x; })
-                        .attr("y", function(d) { return d.y; });
+                        .attr("y", function(d) { return d.y; }); 
+                        
+               /*  d3.selectAll("circle").attr("cx", function (d) {
+							return d.x;
+						})
+							.attr("cy", function (d) {
+							return d.y;
+						});
+						d3.selectAll("text").attr("x", function (d) {
+							return d.x;
+						})
+							.attr("y", function (d) {
+							return d.y;
+						});  */
+           
+	        circle.each(collide(0.5)); //Added  for collition
+
+           
+           
+           
+           
+           
             });
+            
+        // onComplete(k);
+           
 
         }
+        
+        
+        
+       function  onComplete(k){
+        
+            
+            
+                  k++;
+                 recursionLoop(k);
+            
+            
+        
+        
+        }
 
-
+        
+      
 
 
 
