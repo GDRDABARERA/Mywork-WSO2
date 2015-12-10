@@ -436,34 +436,9 @@
             {"source": 76, "target": 58, "value": 1}
         ]
     };
-    var padding = 1, 
-            radius = 8;
+   
             
-    function collide(alpha) {
-        var quadtree = d3.geom.quadtree(graph.nodes);
-        return function (d) {
-            var rb = 2 * radius + padding,
-                    nx1 = d.x - rb,
-                    nx2 = d.x + rb,
-                    ny1 = d.y - rb,
-                    ny2 = d.y + rb;
-            quadtree.visit(function (quad, x1, y1, x2, y2) {
-                if (quad.point && (quad.point !== d)) {
-                    var x = d.x - quad.point.x,
-                            y = d.y - quad.point.y,
-                            l = Math.sqrt(x * x + y * y);
-                    if (l < rb) {
-                        l = (l - rb) / l * alpha;
-                        d.x -= x *= l;
-                        d.y -= y *= l;
-                        quad.point.x += x;
-                        quad.point.y += y;
-                    }
-                }
-                return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-            });
-        };
-    }
+
     var g = graphlibDot.read("digraph { A -> B;}");
 
     console.log(g.nodes);
@@ -536,7 +511,7 @@
 
     var tableNodes = ["NODETWEETTABLE", "BERNIENODETWEETTABLE", "CLINTONNODETWEETTABLE"];
     var tableEdges = ["1EDGETWEETTABLE", "BERNIEEDGETWEETTABLE", "CLINTONEDGETWEETTABLE"];
-    var tableColor = ["#ff471a", "#6699ff", "#3EFF03"];
+    var tableColor = ["#ff471a", "#3399ff", "#548000"];
     var k = 0;
     recursionLoop(k);
     
@@ -681,9 +656,7 @@
                 .enter().append("line")
                 .attr("class", "link")
                 .style("stroke-width", 2)
-                .style("stroke-length", function (d) {
-                    return 2 * Math.sqrt(d.value);
-                });
+                .style("stroke-length", function (d) {return (10000/d.value);});// 2 * Math.sqrt(d.value)
 
         var node = svg.selectAll(".gnode")
                 .data(graph.nodes)
@@ -714,7 +687,38 @@
                     return d.color;
 
                 });
-
+                
+         /*
+             var padding=1;
+             
+             function collide(alpha) {
+                var quadtree = d3.geom.quadtree(graph.nodes);
+                return function (d) {
+                    var radius = rScale(Math.log(d.group));
+                    var rb = 2 * radius + padding,
+                            nx1 = d.x - rb,
+                            nx2 = d.x + rb,
+                            ny1 = d.y - rb,
+                            ny2 = d.y + rb;
+                    quadtree.visit(function (quad, x1, y1, x2, y2) {
+                        if (quad.point && (quad.point !== d)) {
+                            var x = d.x - quad.point.x,
+                                    y = d.y - quad.point.y,
+                                    l = Math.sqrt(x * x + y * y);
+                            if (l < rb) {
+                                l = (l - rb) / l * alpha;
+                                d.x -= x *= l;
+                                d.y -= y *= l;
+                                quad.point.x += x;
+                                quad.point.y += y;
+                            }
+                        }
+                        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+                    });
+                };
+             }
+             
+             */
 //------------------------------------------------------------------------
 //give you nodes with labels          
         var label = node.append("text")
@@ -724,12 +728,34 @@
                 .style("stroke", "#404040")
                 .text(function (d) {
 
-                    if (rScale(Math.log(d.group)) > 10) {
+                    if (rScale(Math.log(d.group)) > 20) {
                         return d.name;
                     }
                 });
+/*-------------------------------------node_drag and pin
+        var node_drag = d3.behavior.drag()
+                                .on("dragstart", dragstart)
+                                .on("drag", dragmove)
+                                .on("dragend", dragend);
+                            function dragstart(d, i) {
+                                force.stop() // stops the force auto positioning before you start dragging
+                            }
+                            function dragmove(d, i) {
+                                d.px += d3.event.dx;
+                                d.py += d3.event.dy;
+                                d.x += d3.event.dx;
+                                d.y += d3.event.dy;
+                            }
+                            function dragend(d, i) {
+                                d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+                                force.resume();
+                            }
+                            function releasenode(d) {
+                                d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+                                //force.resume();
+                            }
 
-//-----------------------------------------------------------------
+//----------------------------------------------------------------- */
         node.append("title")
                 .text(function (d) {
                     return d.name;
@@ -769,6 +795,8 @@
                     .attr("y", function (d) {
                         return d.y;
                     });
+                    
+          // node.each(collide(0.5)); //Added 
 
             circle.each(collide(0.5));
         });
